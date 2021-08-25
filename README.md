@@ -19,3 +19,9 @@
 <p align="center">
   <img src="ImagensDoProjeto/Contas.jpeg" width="600" title="hover text">
 </p>
+
+<br>
+
+<h3> - Sistema feito com C#, Asp.Net Core pelo curso na Udemy </h3>
+<h3> - Cerca de 10 horas </h3>
+<h3> - Informações: gussaraujo@outlook.com </h3>
