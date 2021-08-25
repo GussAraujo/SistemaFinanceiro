@@ -1,0 +1,42 @@
+﻿@model IEnumerable<ProjetoCore.Models.TransacaoModel>
+
+<h3> Minhas Transações </h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th> Id </th>
+            <th> Data </th>
+            <th> Tipo </th>
+            <th> Valor </th>
+            <th> Histórico </th>
+            <th> Conta </th>
+            <th> Plano de Contas </th>
+            <th> #  </th>
+            <th> #  </th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.Id)</td>
+            <td>@Html.DisplayFor(modelItem => item.Data)</td>
+            <td>@Html.DisplayFor(modelItem => item.Tipo)</td>
+            <td>@Html.DisplayFor(modelItem => item.Valor)</td>
+            <td>@Html.DisplayFor(modelItem => item.Descricao)</td>
+            <td>@Html.DisplayFor(modelItem => item.conta)</td>
+            <td>@Html.DisplayFor(modelItem => item.Plano_Conta)</td>
+
+            <td> <button type="button" class="btn btn-danger"> @Html.ActionLink("Excluir", "ExcluirTransacao", new { id = item.Id }, new { @style = "color:white" })</button></td>
+            <td> <button type="button" class="btn btn-danger"> @Html.ActionLink("Editar", "Registrar", new { id = item.Id }, new { @style = "color:white" })</button></td>
+        </tr>
+    }
+</table>
+
+<button type="button" class="btn btn-block btn-primary" onclick="RegistrarTransacao()"> Registrar Transação </button>
+
+<script>
+    function RegistrarTransacao(id) {
+        window.location.href = "../Transacao/Registrar";
+    }
+</script>

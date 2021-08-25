@@ -1,0 +1,45 @@
+﻿@model IEnumerable<ProjetoCore.Models.PlanoContaModel>
+
+<h3> Minhas Contas </h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th> Id </th>
+            <th> Descrição </th>
+            <th> Tipo </th>
+            <th> #  </th>
+            <th> #  </th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Id)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Descricao)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Tipo)
+    </td>
+    <td> <button type="button" class="btn btn-danger"> @Html.ActionLink("Excluir", "ExcluirConta", new { id = item.Id }, new { @style = "color:white" })</button></td>
+    <td> <button type="button" class="btn btn-danger"> @Html.ActionLink("Editar", "Criar", new { id = item.Id }, new { @style = "color:white" })</button></td>
+</tr>
+    }
+</table>
+
+<button type="button" class="btn btn-block btn-primary" onclick="CriarConta()"> Criar Plano de Conta </button>
+
+<script>
+    function CriarConta() {
+        window.location.href = "../PlanoConta/Criar";
+    }
+    function Excluir(id_conta) {
+        window.location.href = "../PlanoConta/ExcluirConta/" + id_conta;
+    }
+    function Editar(id_conta) {
+        window.location.href = "../PlanoConta/Criar/" + id_conta;
+    }
+</script>

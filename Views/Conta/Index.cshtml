@@ -1,0 +1,40 @@
+﻿@model IEnumerable<ProjetoCore.Models.ContaModel>
+
+<h3> Minhas Contas </h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th> Id </th>
+            <th> Nome </th>
+            <th> Saldo </th>
+            <th> #  </th>
+        </tr>
+    </thead>
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
+                R$ @Html.DisplayFor(modelItem => item.Saldo)
+            </td>
+            @*<td><button type="button" class="btn btn-danger" onclick="Excluir(item.Id)"> Excluir </button></td>*@
+            <td> <button type="button" class="btn btn-danger"> @Html.ActionLink("Excluir", "ExcluirConta", new { id = item.Id }, new { @style = "color:white" } )</button></td>
+        </tr>
+    }
+</table>
+
+<button type="button" class="btn btn-block btn-primary" onclick="CriarConta()"> Criar Conta </button>
+
+<script>
+    function CriarConta() {
+        window.location.href = "../Conta/Criar";
+    }
+    function Excluir(id_conta) {
+        window.location.href = "../Conta/ExcluirConta/" + id_conta;
+    }
+</script>

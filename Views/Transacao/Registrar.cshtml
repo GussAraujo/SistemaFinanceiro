@@ -1,0 +1,97 @@
+﻿@model TransacaoModel
+
+<h3> Registrar uma Transação </h3>
+
+@{
+    var vData = "";
+    var vDescricao = "";
+    var vTipo = "";
+    var vId = 0;
+    var vContaId = 0;
+    var vPlanoConvaId = 0;
+    var vValor = 0.0;
+
+    try
+    {
+        vId = int.Parse(@ViewBag.Registo.Id.ToString());
+        vData = DateTime.Parse(@ViewBag.Registo.Data.ToString()).ToString("yyyy-MM-dd");
+        vContaId = int.Parse(@ViewBag.Registo.Conta_Id.ToString());
+        vDescricao = @ViewBag.Registo.Descricao.ToString();
+        vTipo = @ViewBag.Registo.Tipo.ToString();
+        vPlanoConvaId = int.Parse(@ViewBag.Registo.Plano_Contas_Id.ToString());
+        vValor = double.Parse(@ViewBag.Registo.Valor.ToString());
+    }
+    catch { }
+
+}
+
+<form asp-controller="Transacao" asp-action="Registrar">
+    <input type="hidden" asp-for="Id" value="@vId" />
+    <div class="form-group">
+        <label>Data:</label>
+        <input type="date" class="form-control" asp-for="Data" value="@vData">
+        <span asp-validation-for="Data" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label> Tipo: </label>
+        @{
+            if (vTipo == "Receita")
+            {
+                <div class="radio"><label> <input type="radio" asp-for="Tipo" value="Receita" checked> Receita </label></div>
+                <div class="radio"><label> <input type="radio" asp-for="Tipo" value="Despesa" unchecked> Despesa </label></div>
+            }
+            else
+            {
+                <div class="radio"><label> <input type="radio" asp-for="Tipo" value="Receita" unchecked> Receita </label></div>
+                <div class="radio"><label> <input type="radio" asp-for="Tipo" value="Despesa" checked> Despesa </label></div>
+            }
+        }
+        <div class="form-group">
+            <label>Valor:</label>
+            <input type="number" class="form-control" asp-for="Valor" value="@vValor">
+            <span asp-validation-for="Valor" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label> Histórico:</label>
+            @Html.TextArea("Descricao", vDescricao, new { @class = "form-control" })
+            <span asp-validation-for="Descricao" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label> Conta: </label>
+            <select asp-for="Conta_Id" class="form-control">
+                @{
+                    @foreach (var item in (List<ContaModel>)ViewBag.ListaContas)
+                    {
+                        if (item.Id.ToString() == vContaId.ToString())
+                        {
+                            <option selected value="@item.Id.ToString()"> @item.Nome.ToString() </option>
+                        }
+                        else
+                        {
+                            <option value="@item.Id.ToString()"> @item.Nome.ToString() </option>
+                        }
+                    }
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <label> Plano de Contas: </label>
+            <select asp-for="Plano_Contas_Id" class="form-control">
+                @{
+                    @foreach (var item in (List<PlanoContaModel>)ViewBag.ListaPlanoContas)
+                    {
+                        if (item.Id.ToString() == vPlanoConvaId.ToString())
+                        {
+                            <option selected value="@item.Id.ToString()"> @item.Descricao.ToString() </option>
+                        }
+                        else
+                        {
+                            <option value="@item.Id.ToString()"> @item.Descricao.ToString() </option>
+                        }
+                    }
+                }
+            </select>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-block btn-success"> Registrar </button>
+</form>

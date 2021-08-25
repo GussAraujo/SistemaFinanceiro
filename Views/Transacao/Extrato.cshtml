@@ -1,0 +1,92 @@
+﻿@model TransacaoModel
+
+<h2> Extrato </h2>
+<div class="container">
+    <form asp-controller="Transacao" asp-action="Extrato">
+        <div class="form-group">
+            <label>Data:</label>
+            <input type="date" class="form-control" asp-for="Data">
+        </div>
+        <div class="form-group">
+            <label>Data:</label>
+            <input type="date" class="form-control" asp-for="DataFinal">
+        </div>
+        <div class="form-group">
+            <label> Tipo Transação: </label>
+            <div class="radio"><label> <input type="radio" asp-for="Tipo" value="Ambos" checked> Receitas e Despesas </label></div>
+            <div class="radio"><label> <input type="radio" asp-for="Tipo" value="Receita" checked> Receitas </label></div>
+            <div class="radio"><label> <input type="radio" asp-for="Tipo" value="Despesa" checked> Despesas </label></div>
+        </div>
+        <div class="form-group">
+            <label>Conta:</label>
+            <select asp-for="Conta_Id" class="form-control">
+                @{
+                    @foreach (var item in (List<ContaModel>)ViewBag.ListaContas)
+                    {
+                        <option value="@item.Id.ToString()">@item.Nome.ToString()</option>
+                    }
+                }
+            </select>
+        </div>
+        <button type="submit" class="btn btn-block btn-success" onclick="Pesquisa()"> Pesquisar </button>
+    </form>
+</div>
+<br />
+<table class="table">
+    <thead>
+        <tr>
+            <th> Id </th>
+            <th> Data </th>
+            <th> Tipo </th>
+            <th> Valor </th>
+            <th> Histórico </th>
+            <th> Conta </th>
+            <th> Plano de Contas </th>
+            <th> #  </th>
+        </tr>
+    </thead>
+    @{
+        var TotalReceitas = 0.0;
+        var TotalDespesas = 0.0;
+        var vSaldo = 0.0;
+
+        foreach (var item in (List<TransacaoModel>)ViewBag.ListaTransacao)
+        {
+            <tbody>
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Data)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Tipo)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Valor)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Descricao)</td>
+                    <td>@Html.DisplayFor(modelItem => item.conta)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Plano_Conta)</td>
+
+                    <td> <button type="button" class="btn btn-danger"> @Html.ActionLink("Editar", "Registrar", new { id = item.Id }, new { @style = "color:white" })</button></td>
+                </tr>
+
+                @{
+                    if (item.Tipo == "Despesa")
+                    {
+                        TotalDespesas += int.Parse(item.Valor.ToString());
+                    }
+                    else
+                    {
+                        TotalReceitas += int.Parse(item.Valor.ToString());
+                    }
+                }
+            </tbody>
+        }
+        vSaldo = TotalReceitas - TotalDespesas;
+    }
+</table>
+
+<h3> <strong> Saldo: </strong> R$ @vSaldo </h3>
+
+<script>
+    function Editar(Id) {
+        window.location.href = "../Registrar/" + id;
+    } function Pesquisa(Id) {
+        window.location.href = "../Registrar/Extrato/" + id;
+    }
+</script>
