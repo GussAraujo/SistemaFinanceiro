@@ -17,5 +17,5 @@
 </p>
 <h4 align="center"> Página de Contas: </h4>
 <p align="center">
-  <img src="ImagensDoProjeto/Registro.jpeg" width="600" title="hover text">
+  <img src="ImagensDoProjeto/Contas.jpeg" width="600" title="hover text">
 </p>
